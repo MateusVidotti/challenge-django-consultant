@@ -1,0 +1,9 @@
+#!/bin/bash
+set -o errexit
+set -o pipefail
+set -o nounset
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py ensure_adminuser --username=admin  --email=admin@admin.com  --password=admin
+python manage.py runserver

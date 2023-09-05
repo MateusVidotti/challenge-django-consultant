@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: loan_db
+    hostname: loan_db
+    image: postgres:15
+    volumes:
+      - data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${SQL_DATABASE}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data/
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    env_file:
+      - env/dev-docker.env
+
+  rabbitmq:
+      container_name: loan_rabbitmq
+      hostname: loan_rabbitmq
+      image: rabbitmq:3.12.4-management-alpine
+
+      environment:
+          - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+          - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      ports:
+          - 5672:5672
+          - 15672:15672
+      restart: always
+      env_file:
+        - env/dev-docker.env
+
+  backend:
+    build:
+      context: .
+      dockerfile: lfg/Dockerfile
+    container_name: loan-backend
+    command: /start-django
+    volumes:
+        - ./lfg:/code
+    ports:
+      - 8000:8000
+    env_file:
+      - env/dev-docker.env
+    depends_on:
+      - rabbitmq
+      - db
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: lfg/Dockerfile
+    container_name: loan-worker
+    command: /start-celeryworker
+    volumes:
+      - ./lfg:/code
+    env_file:
+      - env/dev-docker.env
+    depends_on:
+      - rabbitmq
+      - db
+  
+  app_web:
+    container_name: loan-web
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: app_web
+    ports:
+      - 8080:80
+    volumes:
+      - ./app/form/:/usr/local/apache2/htdocs/
+
+volumes:
+  data: {}

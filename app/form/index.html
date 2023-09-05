@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan for Good</title>
+    <!-- font-awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="section-center">
+        <!-- form -->
+        <form class="loan-form" action="http://127.0.0.1:8000/api/loansrequest" method="post">
+          <p class="alert"></p>
+          <h3>Loan for Good</h3>
+          <p id="loading">carregando...</p>
+          <div class="form-control">
+            <ul class="form-list">
+                <li>
+                </li>
+            </ul>
+            <div>
+                <button type="submit" class="submit-btn">enviar</button>
+            </div>
+        </div>
+    </form>
+      </section>
+
+    <!-- javascript -->
+    <script src="app.js"></script>
+  </body>
+</html>

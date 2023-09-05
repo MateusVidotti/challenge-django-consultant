@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "challenge-django-consultant"
+version = "0.1.0"
+description = ""
+authors = ["mateu <mateus.vidotti@idgeo.com.br>"]
+readme = "README.md"
+packages = [{include = "challenge_django_consultant"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = "^4.2.4"
+djangorestframework = "^3.14.0"
+celery = "^5.3.1"
+django-extensions = "^3.2.3"
+django-cpf = "^0.1.0"
+django-cors-headers = "^4.2.0"
+psycopg2-binary = "^2.9.7"
+
+
+[tool.poetry.group.dev.dependencies]
+httpie = "^3.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

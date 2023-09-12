@@ -1,4 +1,4 @@
-const url ='http://127.0.0.1:8000/api/formsettings';
+const url ='http://127.0.0.1:8000/api/loansrequest';
 const formList = document.querySelector('.form-list');
 const loadingElement = document.querySelector('#loading')
 const loadedElement = document.querySelector('#loaded')

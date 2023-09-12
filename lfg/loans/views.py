@@ -5,7 +5,7 @@ from loans.tasks import loan_assess
 from rest_framework.decorators import api_view
 from rest_framework import permissions
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -29,6 +29,13 @@ class LoansRequest(CreateModelMixin, GenericAPIView):
     """
     serializer_class = LoanSerializer
 
+    def get(self, request, format=None):
+        LoanForm = modelform_factory(Loan, labels={'name': 'Nome', 'cpf': 'CPF', 'value': 'Valor'},
+                                     exclude=['id', 'assess', 'approved_by_api', 'extra_values', 'created', 'modified'])
+        form = LoanForm()
+        form_settings = {'data': form.as_ul()}
+        return Response(form_settings)
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
@@ -40,10 +47,10 @@ class LoansRequest(CreateModelMixin, GenericAPIView):
 class FormSettings(APIView):
     """Get loan form settings."""
     def get(self, request, format=None):
-        LoanForm = modelform_factory(Loan, exclude=['id', 'assess', 'approved_by_api', 'extra_values', 'created', 'modified'])
+        LoanForm = modelform_factory(Loan, labels={'name': 'Nome', 'cpf': 'CPF', 'value': 'Valor'},
+                                     exclude=['id', 'assess', 'approved_by_api', 'extra_values', 'created', 'modified'])
         form = LoanForm()
         form_settings = {'data': form.as_ul()}
-        # return Response(JSONRenderer().render(form_settings))
         return Response(form_settings)
 
 

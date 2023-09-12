@@ -6,32 +6,27 @@ services:
     hostname: loan_db
     image: postgres:15
     volumes:
-      - data:/var/lib/postgresql/data/
+      - ./db:/var/lib/postgresql/data/
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
-      - POSTGRES_DB=${SQL_DATABASE}
-      - POSTGRES_USER=${SQL_USER}
-      - POSTGRES_PASSWORD=${SQL_PASSWORD}
-      - PGDATA=/var/lib/postgresql/data/
+      - "POSTGRES_DB=${SQL_DATABASE}"
+      - "POSTGRES_USER=${SQL_USER}"
+      - "POSTGRES_PASSWORD=${SQL_PASSWORD}"
+      - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_HOST_AUTH_METHOD=trust
-    env_file:
-      - env/dev-docker.env
 
   rabbitmq:
-      container_name: loan_rabbitmq
-      hostname: loan_rabbitmq
-      image: rabbitmq:3.12.4-management-alpine
-
-      environment:
-          - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
-          - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-      ports:
-          - 5672:5672
-          - 15672:15672
-      restart: always
-      env_file:
-        - env/dev-docker.env
+    container_name: loan_rabbitmq
+    hostname: loan_rabbitmq
+    image: rabbitmq:3.12.4-management-alpine
+    environment:
+        - "RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}"
+        - "RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}"
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    restart: always
 
   backend:
     build:
@@ -42,12 +37,13 @@ services:
     volumes:
         - ./lfg:/code
     ports:
-      - 8000:8000
+      - "8000:8000"
     env_file:
-      - env/dev-docker.env
+      - .env
     depends_on:
       - rabbitmq
       - db
+    restart: always
 
   celery_worker:
     build:
@@ -58,10 +54,11 @@ services:
     volumes:
       - ./lfg:/code
     env_file:
-      - env/dev-docker.env
+      - .env
     depends_on:
       - rabbitmq
       - db
+    restart: always
   
   app_web:
     container_name: loan-web
@@ -73,6 +70,3 @@ services:
       - 8080:80
     volumes:
       - ./app/form/:/usr/local/apache2/htdocs/
-
-volumes:
-  data: {}

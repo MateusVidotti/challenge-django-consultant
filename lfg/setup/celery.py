@@ -1,5 +1,6 @@
-import os
 from celery import Celery
+import os
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "setup.settings")
 app = Celery("django_celery")

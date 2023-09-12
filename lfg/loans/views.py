@@ -1,34 +1,40 @@
 from django.forms import modelform_factory
 from loans.models import Loan
-from loans.tasks import loan_assess
 from loans.serializers import LoanSerializer
-from rest_framework import status
+from loans.tasks import loan_assess
+from rest_framework.decorators import api_view
+from rest_framework import permissions
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 
-class Loans(APIView):
+class Loans(ListModelMixin, GenericAPIView):
     """
     List all loan requests
     """
-    def get(self, request, format=None):
-        loans = Loan.objects.all()
-        serializer = LoanSerializer(loans, many=True)
-        return Response(serializer.data)
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Loan.objects.all()
+    serializer_class = LoanSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
 
-class LoansRequest(APIView):
+class LoansRequest(CreateModelMixin, GenericAPIView):
     """
     Create a new loan request.
     """
-    def post(self, request):
-        serializer = LoanSerializer(data=request.data)
-        if serializer.is_valid():
-            # serializer.save()
-            obj = serializer.save()
-            loan_assess.delay(obj.id)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer_class = LoanSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        obj = serializer.save()
+        loan_assess.delay(obj.id)
 
 
 class FormSettings(APIView):
@@ -39,3 +45,12 @@ class FormSettings(APIView):
         form_settings = {'data': form.as_ul()}
         # return Response(JSONRenderer().render(form_settings))
         return Response(form_settings)
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'api/loans': reverse('loans', request=request, format=format),
+        'loansrequest': reverse('loansrequest', request=request, format=format),
+        'formsettings': reverse('formsettings', request=request, format=format)
+    })

@@ -73,9 +73,7 @@ body {
   line-height: 1.5;
   font-size: 0.875rem;
 }
-ul {
-  list-style-type: none;
-}
+
 a {
   text-decoration: none;
 }
@@ -137,24 +135,7 @@ p {
 }
 /*  global classes */
 
-.btn {
-  text-transform: uppercase;
-  background: transparent;
-  color: var(--clr-black);
-  padding: 0.375rem 0.75rem;
-  letter-spacing: var(--spacing);
-  display: inline-block;
-  transition: var(--transition);
-  font-size: 0.875rem;
-  border: 2px solid var(--clr-black);
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius);
-}
-.btn:hover {
-  color: var(--clr-white);
-  background: var(--clr-black);
-}
+
 /* section */
 .section {
   padding: 5rem 0;
@@ -210,16 +191,57 @@ main {
   color: #155724;
   background: #d4edda;
 }
-.loan-form h3 {
-  color: var(--clr-primary-1);
-  margin-bottom: 1.5rem;
-  text-align: center;
-  align-content: center;
-}
+
 .form-control {
   display: flex;
   flex-direction:column;
   justify-content: center;
+}
+
+
+input{
+  padding: 10px;
+  rgba(0,0,0,0.06);
+  font-family: monospace;
+  width: 300px;
+  border: 1px solid #999;
+
+}
+
+input:focus{
+  border-color: #000
+}
+
+.loan-form h3 {
+  /* Center the form on the page */
+  margin: 10px auto;
+  width: 400px;
+  /* Form outline */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+form li + li {
+  margin-top: 1em;
+}
+
+label {
+  /* Uniform size & alignment */
+  display: inline-block;
+  width: 90px;
+  text-align: right;
+}
+
+.helptext {
+  display: none;
 }
 
 .submit-btn {
@@ -227,9 +249,9 @@ main {
   border-color: transparent;
   flex: 0 0 5rem;
   display: grid;
-  align-items: center;
-  padding: 0.25rem;
+  padding: 10px;
   text-transform: capitalize;
+  text-align: center;
   letter-spacing: 2px;
   border-top-right-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
@@ -237,18 +259,16 @@ main {
   content: var(--clr-primary-5);
   transition: var(--transition);
   font-size: 0.85rem;
+  align-items: center;
+  margin: 10px auto
+  
 }
 .submit-btn:hover {
   background: var(--clr-primary-5);
   color: var(--clr-white);
 }
 
-input{
-  padding: 10px;
-  box-shadow: 0 0 15px 4px;
-  rgba(0,0,0,0.06);
-  border-radius: 20px;
-  font-family: monospace;
-
+p {
+  text-align: center;
 }
 

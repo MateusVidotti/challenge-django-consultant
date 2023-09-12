@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': environ.get('SQL_DATABASE', 'loan'), 'USER': environ.get('SQL_USER', 'postgres'),
+        'NAME': environ.get('SQL_DATABASE', 'postgres'), 'USER': environ.get('SQL_USER', 'postgres'),
         'PASSWORD':  environ.get('SQL_PASSWORD', 'postgres'),
         'HOST': environ.get('SQL_HOST', 'localhost'), 'PORT': environ.get('SQL_PORT', '5432')
     }
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -130,6 +130,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 # Celery
 CELERY_BROKER_URL = environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672//')

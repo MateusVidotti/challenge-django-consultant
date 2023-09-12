@@ -1,6 +1,7 @@
 const url ='http://127.0.0.1:8000/api/formsettings';
 const formList = document.querySelector('.form-list');
 const loadingElement = document.querySelector('#loading')
+const loadedElement = document.querySelector('#loaded')
 const loanForm = document.querySelector('.loan-form')
 const alert = document.querySelector('.alert');
 

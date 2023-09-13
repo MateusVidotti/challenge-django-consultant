@@ -16,6 +16,17 @@ def send_fail_mail(loan_id):
 
 
 @shared_task
+def send_sucess_mail(loan_id):
+    """Send mail for accepted loan."""
+    loan_request = Loan.objects.get(id=loan_id)
+    send_mail("Pedido Aprovado",
+              f"O seu pedido de empréstimo foi aprovado. O valor de {loan_request.value} já está disponível",
+              "support@example.com",
+              (loan_request.email, ),
+              fail_silently=False)
+
+
+@shared_task
 def loan_assess(loan_id):
     """Assess a loan with digitalsys api"""
     loan_request = Loan.objects.get(id=loan_id)
@@ -27,7 +38,7 @@ def loan_assess(loan_id):
     }
     response = requests.post(api_url, json=data)
     if response.status_code == 200:
-        loan_request.assess = True
+        loan_request.assess_by_api = True
         if response.json()['approved'] is True:
             loan_request.approved_by_api = True
         else:

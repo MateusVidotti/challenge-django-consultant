@@ -6,15 +6,14 @@ services:
     hostname: loan_db
     image: postgres:15
     volumes:
-      - ./db:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
     environment:
       - "POSTGRES_DB=${SQL_DATABASE}"
       - "POSTGRES_USER=${SQL_USER}"
       - "POSTGRES_PASSWORD=${SQL_PASSWORD}"
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
 
   rabbitmq:
     container_name: loan_rabbitmq
@@ -70,3 +69,6 @@ services:
       - 8080:80
     volumes:
       - ./app/form/:/usr/local/apache2/htdocs/
+
+volumes:
+  postgres_data:

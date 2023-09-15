@@ -19,6 +19,8 @@ psycopg2-binary = "^2.9.7"
 
 [tool.poetry.group.dev.dependencies]
 httpie = "^3.2.2"
+pytest = "^7.4.2"
+pytest-django = "^4.5.2"
 
 [build-system]
 requires = ["poetry-core"]

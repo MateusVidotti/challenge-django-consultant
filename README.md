@@ -9,7 +9,7 @@
 - URL app web: http://localhost:8080/
 - No arquivo `.env` estão as variáveis de ambiente
 
-### Serviços utilizado
+### Serviços utilizados
 - banco de dados: PostgreSQL
 - mensager broker: rabbitmq
 - servidor web: httpd

@@ -11,15 +11,20 @@ from rest_framework import status
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    return Response({
-        'loansrequest': reverse('loansrequest', request=request, format=format),
-    })
+    return Response(
+        {
+            'loansrequest': reverse(
+                'loansrequest', request=request, format=format
+            ),
+        }
+    )
 
 
 class LoansRequest(CreateModelMixin, GenericAPIView):
     """
     Create a new loan request.
     """
+
     serializer_class = LoanSerializer
 
     def get(self, request):
@@ -45,6 +50,8 @@ class LoansRequest(CreateModelMixin, GenericAPIView):
         print(request.data)
         serializer.is_valid(raise_exception=True)
         obj = serializer.save()
-        loan_assess.delay(obj.id) # send a request to api assess with celery
+        loan_assess.delay(obj.id)   # send a request to api assess with celery
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )

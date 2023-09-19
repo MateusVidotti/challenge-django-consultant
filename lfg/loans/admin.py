@@ -12,9 +12,14 @@ def approve_loans(modeladmin, request, queryset):
 
 @admin.register(Loan)
 class LoanAdmin(admin.ModelAdmin):
-    list_display = ('name', 'assess_by_api', 'approved_by_api', 'approved_by_admin')
+    list_display = (
+        'name',
+        'assess_by_api',
+        'approved_by_api',
+        'approved_by_admin',
+    )
     readonly_fields = ('approved_by_api', 'assess_by_api', 'approved_by_admin')
-    list_filter = ('approved_by_api', )
+    list_filter = ('approved_by_api',)
     actions = [approve_loans]
 
 

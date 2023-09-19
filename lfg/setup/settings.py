@@ -21,19 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tjsm@#@)1nnl*uzh$1vo3fk-@(qnju(xvn(9$-ng12rqj#&&b$'
+SECRET_KEY = (
+    'django-insecure-tjsm@#@)1nnl*uzh$1vo3fk-@(qnju(xvn(9$-ng12rqj#&&b$'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ("*",)
+ALLOWED_HOSTS = ('*',)
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "corsheaders",
+    'corsheaders',
     'cpf_field',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,9 +86,11 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': environ.get('SQL_DATABASE', 'postgres'), 'USER': environ.get('SQL_USER', 'postgres'),
-        'PASSWORD':  environ.get('SQL_PASSWORD', 'postgres'),
-        'HOST': environ.get('SQL_HOST', 'localhost'), 'PORT': environ.get('SQL_PORT', '5432')
+        'NAME': environ.get('SQL_DATABASE', 'postgres'),
+        'USER': environ.get('SQL_USER', 'postgres'),
+        'PASSWORD': environ.get('SQL_PASSWORD', 'postgres'),
+        'HOST': environ.get('SQL_HOST', 'localhost'),
+        'PORT': environ.get('SQL_PORT', '5432'),
     }
 }
 
@@ -134,9 +138,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
 }
 
 # Celery
-CELERY_BROKER_URL = environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672//')
-EMAIL_BACKEND = environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+CELERY_BROKER_URL = environ.get(
+    'CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672//'
+)
+EMAIL_BACKEND = environ.get(
+    'EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend'
+)

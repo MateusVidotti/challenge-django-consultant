@@ -1,10 +1,11 @@
 from cpf_field.models import CPFField
 from django.db import models
-from django_extensions.db.models import TimeStampedModel
-from utils.model_abstracts import Model
 from django.forms import ModelForm
-from loans.utils import FIELD_TYPES_CHOICES
 from django.utils.module_loading import import_string
+from django_extensions.db.models import TimeStampedModel
+
+from loans.utils import FIELD_TYPES_CHOICES
+from utils.model_abstracts import Model
 
 
 class Loan(Model, TimeStampedModel):

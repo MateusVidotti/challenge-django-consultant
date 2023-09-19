@@ -1,6 +1,7 @@
-from loans.models import Loan
 import pytest
 from rest_framework.test import APIClient
+
+from loans.models import Loan
 
 
 @pytest.fixture

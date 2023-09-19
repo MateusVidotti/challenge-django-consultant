@@ -1,4 +1,5 @@
 import pytest
+
 from loans.models import Loan
 from loans.serializers import LoanSerializer
 

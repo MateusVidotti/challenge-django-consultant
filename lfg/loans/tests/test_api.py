@@ -1,8 +1,10 @@
 import json
-from loans.models import LoanForm, Loan
-import pytest
 import re
+
+import pytest
 from rest_framework.reverse import reverse
+
+from loans.models import Loan, LoanForm
 
 pytestmark = pytest.mark.django_db
 

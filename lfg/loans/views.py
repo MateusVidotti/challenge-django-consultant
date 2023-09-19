@@ -1,12 +1,13 @@
-from loans.models import LoanForm
-from loans.serializers import LoanSerializer
-from loans.tasks import loan_assess
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import status
+
+from loans.models import LoanForm
+from loans.serializers import LoanSerializer
+from loans.tasks import loan_assess
 
 
 @api_view(['GET'])

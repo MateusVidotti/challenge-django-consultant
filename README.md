@@ -26,4 +26,3 @@ dados do formulário. Quando o sistema recebe uma nova solictação de emprésti
 a avaliação por meio da api da DigitalSys. Caso a proposta não seja aprovada pela api, será enviado um email informando.
 Caso aprovada o admin/usuário do sistema será notificado que existe nova proposta para avaliação. Uma vez ocorrendo a 
 avalição do admin/usuário, será enviado um email para o solicitante.
-
